@@ -4,14 +4,18 @@ import java.util.Calendar;
 
 
 /**
- * Class to represent an entity Drink
+ * Drink entity class
  *
  */
 public class Drink extends Entity {
     private String name;
+    private String ingredients;
     private Double price;
     private Calendar manufactureDate;
     private Calendar expirationDate;
+    private Category category;
+    private Supplier supplier;
+    private Manufacturer manufacturer;
 
     public Drink() {}
 
@@ -45,5 +49,37 @@ public class Drink extends Entity {
 
     public void setExpirationDate(Calendar expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
     }
 }
