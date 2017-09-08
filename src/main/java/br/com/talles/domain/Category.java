@@ -1,6 +1,8 @@
 package br.com.talles.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Category entity class
@@ -11,6 +13,7 @@ public class Category extends Entity {
     private String description;
     private Boolean alcoholic;
     private Calendar maxPermanencyPeriod;
+    private List<Drink> drinks = new ArrayList<>();
 
     public Category() {
     }
