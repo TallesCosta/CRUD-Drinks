@@ -4,7 +4,7 @@
 	Supplier and Manufacturer are companies.
 	That relationship will be mapped with the class per table, where Supplier and Manufacturer will be different tables.
 */
-CREATE TABLE Manufacturer (
+CREATE TABLE Manufacturers (
     id INT NOT NULL AUTO_INCREMENT,
 	createdDate DATE NOT NULL,
     updatedDate DATE NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE Manufacturer (
 	CONSTRAINT PK_Manufacturer PRIMARY KEY (id)
 );
 
-CREATE TABLE Supplier (
+CREATE TABLE Suppliers (
     id INT NOT NULL AUTO_INCREMENT,
 	createdDate DATE NOT NULL,
     updatedDate DATE NOT NULL,

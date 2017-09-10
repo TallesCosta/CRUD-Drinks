@@ -1,7 +1,7 @@
 /*
 	Create drink tables, the main entity of database
 */
-CREATE TABLE Drink (
+CREATE TABLE Drinks (
     id INT NOT NULL AUTO_INCREMENT,
 	createdDate DATE NOT NULL,
     updatedDate DATE NOT NULL,
@@ -16,6 +16,6 @@ CREATE TABLE Drink (
 	CONSTRAINT PK_Drink PRIMARY KEY (id)
 );
 
-ALTER TABLE Drink ADD FOREIGN KEY (id_category) REFERENCES Category(id);
-ALTER TABLE Drink ADD FOREIGN KEY (id_manufacturer) REFERENCES Manufacturer(id);
-ALTER TABLE Drink ADD FOREIGN KEY (id_supplier) REFERENCES Supplier(id);
+ALTER TABLE Drinks ADD FOREIGN KEY (id_category) REFERENCES Categories(id);
+ALTER TABLE Drinks ADD FOREIGN KEY (id_manufacturer) REFERENCES Manufacturers(id);
+ALTER TABLE Drinks ADD FOREIGN KEY (id_supplier) REFERENCES Suppliers(id);

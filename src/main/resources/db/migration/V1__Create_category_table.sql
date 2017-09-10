@@ -1,7 +1,7 @@
 /*
 	Create category table
 */
-CREATE TABLE Category (
+CREATE TABLE Categories (
     id INT NOT NULL AUTO_INCREMENT,
 	createdDate DATE NOT NULL,
     updatedDate DATE NOT NULL,
