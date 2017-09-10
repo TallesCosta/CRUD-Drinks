@@ -10,4 +10,14 @@
 			<activatedProfile>jetty-run</activatedProfile>
 		</activatedProfiles>
 	</action>
+	<action>
+            <actionName>CUSTOM-flyway:migrate</actionName>
+            <displayName>flyway:migrate</displayName>
+            <goals>
+                <goal>flyway:migrate</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>flyway:migrate</activatedProfile>
+            </activatedProfiles>
+        </action>
 </actions>
