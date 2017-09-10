@@ -7,7 +7,7 @@ import java.util.List;
  * Generalized class to simplify
  * Manufacturer and Supplier classes
  */
-public class Company<T> extends Entity {
+public abstract class Company<T> extends Entity {
     private String name;
     private String registry;
     private String phone;
