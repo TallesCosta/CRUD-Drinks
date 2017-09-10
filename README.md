@@ -21,4 +21,4 @@ $ mvn flyway:migrate
 $ mvn jetty:run
 ```
 
-Go to `localhost:8080/sistemacomandas` in web browser
+Go to `localhost:8080/crud-drinks` in web browser
