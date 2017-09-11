@@ -5,7 +5,7 @@ import br.com.talles.drink.persistence.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public abstract class AbstractDAO implements IDao {
+public abstract class AbstractDao implements IDao {
     protected Connection conn;
 
 	public void openConnection() {
