@@ -1,6 +1,7 @@
 package br.com.talles.drink.domain;
 
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -18,7 +19,27 @@ public class Drink extends Entity {
     private Manufacturer manufacturer;
 
     public Drink() {}
+	
+	public Drink(Long id){
+		super(id);
+	}
+	
+	public Drink(String name, String ingredients, Double price, Calendar manufactureDate, Calendar expirationDate, 
+			Category category, Manufacturer manufacturer, Supplier supplier) {
+		this.name = name;
+		this.ingredients = ingredients;
+		this.price = price;
+		this.manufactureDate = manufactureDate;
+		this.expirationDate = expirationDate;
+		this.category = category;
+		this.manufacturer = manufacturer;
+		this.supplier = supplier;
+	}
 
+	public Drink(String name, String ingredients, Double aDouble, Date manufactureDate, Date expirationDate) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+	
     public String getName() {
         return name;
     }
