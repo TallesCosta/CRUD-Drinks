@@ -1,8 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="br.com.talles.drink.domain.Drink"%>
-<%@page import="br.com.talles.drink.domain.Entity"%>
-<%@page import="java.util.List"%>
-<%@page import="br.com.talles.drink.persistence.dao.DrinkDao"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,28 +22,7 @@
 			<label for="expirationDate">Expiration Date: </label>
 			<input type="date" name="expirationDate" id="expirationDate" />
 			<br/>
-			<button type="submit">Save here! c:</button>
+			<button type="submit" name="operation" value="SAVE">Save here! c:</button>
 		</form>
-		
-        <h1>Hello World!</h1>
-		
-		<%
-			DrinkDao dao = new DrinkDao();
-			List<Entity> list = dao.select();
-			if(list != null){
-				for(Entity listItem : list){
-					Drink item = (Drink) listItem;
-					out.println("<p>");
-					out.println(item.getId() + " - " + item.getCreateDate() + " - " + item.getUpdateDate());
-					out.println("<br/>");
-					out.println(item.getName() + " - " + item.getIngredients() + " - " + item.getPrice());
-					out.println("<br/>");
-					out.println(item.getManufactureDate().getTime() + " - " + item.getExpirationDate().getTime());
-					out.println("</p>");
-				}
-			}else{
-				out.println("<p>Sem dados...</p>");
-			}
-		%>
     </body>
 </html>

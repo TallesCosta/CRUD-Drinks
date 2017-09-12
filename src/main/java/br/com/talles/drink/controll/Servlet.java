@@ -6,9 +6,12 @@ import br.com.talles.drink.controll.command.ICommand;
 import br.com.talles.drink.controll.command.SaveCmd;
 import br.com.talles.drink.controll.command.SelectCmd;
 import br.com.talles.drink.controll.command.UpdateCmd;
-import br.com.talles.drink.controll.viewHelper.DrinkVh;
+import br.com.talles.drink.controll.viewHelper.drink.CreateDrinkVh;
 import br.com.talles.drink.controll.viewHelper.IViewHelper;
-import br.com.talles.drink.domain.Drink;
+import br.com.talles.drink.controll.viewHelper.drink.DeleteDrinkVh;
+import br.com.talles.drink.controll.viewHelper.drink.FindDrinkVh;
+import br.com.talles.drink.controll.viewHelper.drink.ListDrinkVh;
+import br.com.talles.drink.controll.viewHelper.drink.UpdateDrinkVh;
 import br.com.talles.drink.domain.Entity;
 
 import java.io.IOException;
@@ -22,7 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "EntryPoint", urlPatterns = {"/start", "/create"})
+@WebServlet(name = "EntryPoint", urlPatterns = {"/list", "/create"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -30,7 +33,11 @@ public class Servlet extends HttpServlet {
 
 	public Servlet() {
 		viewHelpers = new HashMap();
-		viewHelpers.put("/crud-drinks/create", new DrinkVh());
+		viewHelpers.put("/crud-drinks/create", new CreateDrinkVh());
+		viewHelpers.put("/crud-drinks/list", new ListDrinkVh());
+		viewHelpers.put("/crud-drinks/delete", new DeleteDrinkVh());
+		viewHelpers.put("/crud-drinks/find", new FindDrinkVh());
+		viewHelpers.put("/crud-drinks/update", new UpdateDrinkVh());
 
 		commands = new HashMap();
 		commands.put("SAVE", new SaveCmd());
@@ -49,18 +56,18 @@ public class Servlet extends HttpServlet {
 
         Entity entity = viewHelper.getEntity(request);
 
-		/*String cmd = request.getParameter("operation");
+		String cmd = request.getParameter("operation");
         ICommand command = commands.get(cmd);
 
         Result result = command.execute(entity);
 
-        viewHelper.setView(result, request, response);*/	
+        viewHelper.setView(result, request, response);
 		
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
 		out.println("<body>");
-		out.println("FOI!");
-		out.println("FOI! " + ((Drink) entity).getName());
+		out.println("Msg:" + result.getMsg());
+		out.println(cmd);
 		out.println("</body>");
 		out.println("</html>");
 	}

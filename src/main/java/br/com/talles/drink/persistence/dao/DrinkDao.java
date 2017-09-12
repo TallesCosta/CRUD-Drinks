@@ -17,20 +17,22 @@ public class DrinkDao extends AbstractDao {
 
 	@Override
 	public boolean save(Entity entity) {
+		openConnection();
+		
 		Drink drink = (Drink) entity;
-        String sql = "INSERT INTO drinks(createDate, updateDate, name, ingredients, price, manufactureDate, expirationDate)"
+        String sql = "INSERT INTO drinks(createdDate, updatedDate, name, ingredients, price, manufactureDate, expirationDate)"
                     + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-        
+        		
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
-            
+			
             statement.setTimestamp(1, new java.sql.Timestamp(drink.getCreateDate().getTime()));
             statement.setTimestamp(2, new java.sql.Timestamp(drink.getUpdateDate().getTime()));
             statement.setString(3, drink.getName());
             statement.setString(4, drink.getIngredients());
 			statement.setDouble(5, drink.getPrice());
-			statement.setDate(6, new java.sql.Date(drink.getManufactureDate().getTime().getTime()));
-			statement.setDate(7, new java.sql.Date(drink.getExpirationDate().getTime().getTime()));
+			statement.setDate(6, new java.sql.Date(drink.getManufactureDate().getTimeInMillis()));
+			statement.setDate(7, new java.sql.Date(drink.getExpirationDate().getTimeInMillis()));
             statement.execute();
             statement.close();
             
@@ -38,7 +40,9 @@ public class DrinkDao extends AbstractDao {
         } catch (SQLException ex) {
             Logger.getLogger(DrinkDao.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }
+        } finally{
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -84,13 +88,13 @@ public class DrinkDao extends AbstractDao {
             
             result.close();
             statement.close();
-			closeConnection();
-			super.closeConnection();
             
             return drinks;
-        }catch(SQLException e){
+        } catch(SQLException e){
             throw new RuntimeException(e);  
-        }
+        } finally{
+			closeConnection();
+		}
 	}
 
 	@Override

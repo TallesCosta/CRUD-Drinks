@@ -19,13 +19,18 @@ public class Drink extends Entity {
     private Manufacturer manufacturer;
 
     public Drink() {}
-
-	public Drink(String name, String ingredients, Double price/*, Calendar manufactureDate, Calendar expirationDate*/) {
+	
+	public Drink(Long id){
+		super(id);
+	}
+	
+	public Drink(String name, String ingredients, Double price, Calendar manufactureDate, Calendar expirationDate) {
+		super(new Date(), new Date());
 		this.name = name;
 		this.ingredients = ingredients;
 		this.price = price;
-		/*this.manufactureDate = manufactureDate;
-		this.expirationDate = expirationDate;*/
+		this.manufactureDate = manufactureDate;
+		this.expirationDate = expirationDate;
 	}
 
 	public Drink(String name, String ingredients, Double aDouble, Date manufactureDate, Date expirationDate) {

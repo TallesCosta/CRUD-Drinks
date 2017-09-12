@@ -11,6 +11,10 @@ public class Entity {
 
 	public Entity() {}
 
+	public Entity(Long id) {
+		this.id = id;
+	}
+	
     public Entity(Date createdDate, Date updatedDate) {
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;

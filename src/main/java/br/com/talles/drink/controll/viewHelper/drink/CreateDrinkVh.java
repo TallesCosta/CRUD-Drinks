@@ -1,20 +1,22 @@
 
-package br.com.talles.drink.controll.viewHelper;
+package br.com.talles.drink.controll.viewHelper.drink;
 
 import br.com.talles.drink.controll.Result;
+import br.com.talles.drink.controll.viewHelper.IViewHelper;
 import br.com.talles.drink.domain.Drink;
 import br.com.talles.drink.domain.Entity;
 
-import java.util.Date;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DrinkVh implements IViewHelper {
+public class CreateDrinkVh implements IViewHelper {
 
 	@Override
 	public Entity getEntity(HttpServletRequest request) {
@@ -25,21 +27,25 @@ public class DrinkVh implements IViewHelper {
 		String expirationString = request.getParameter("expirationDate");
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		Date manufactureDate = new Date();
-		Date expirationDate = new Date();
+		Calendar manufactureDate = Calendar.getInstance();
+		Calendar expirationDate = Calendar.getInstance();
 		try {
-			manufactureDate = dateFormat.parse(manufactureString);
-			expirationDate = dateFormat.parse(expirationString);
+			manufactureDate.setTime(dateFormat.parse(manufactureString));
+			expirationDate.setTime(dateFormat.parse(expirationString));
 		} catch (ParseException | NullPointerException ex) {
-			Logger.getLogger(DrinkVh.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		
-		return new Drink(name, ingredients, new Double(price));
+		return new Drink(name, ingredients, new Double(price), manufactureDate, expirationDate);
 	}
 
 	@Override
 	public void setView(Result result, HttpServletRequest request, HttpServletResponse response) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		try {
+			response.sendRedirect("/list?operation=SELECT");
+		} catch (IOException ex) {
+			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 	
 }
