@@ -25,7 +25,7 @@ public class DeleteDrinkVh implements IViewHelper {
 	@Override
 	public void setView(Result result, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			response.sendRedirect("/list?operation=SELECT");
+			response.sendRedirect("/crud-drinks/drinks?operation=SELECT");
 		} catch (IOException ex) {
 			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
 		}

@@ -3,6 +3,7 @@ package br.com.talles.drink.controll.viewHelper.drink;
 
 import br.com.talles.drink.controll.Result;
 import br.com.talles.drink.controll.viewHelper.IViewHelper;
+import br.com.talles.drink.domain.Drink;
 import br.com.talles.drink.domain.Entity;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class ListDrinkVh implements IViewHelper {
 
 	@Override
 	public Entity getEntity(HttpServletRequest request) {
-		return null;
+		return new Drink();
 	}
 
 	@Override

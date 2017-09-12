@@ -26,14 +26,14 @@ public class CreateDrinkVh implements IViewHelper {
 		String manufactureString = request.getParameter("manufactureDate");
 		String expirationString = request.getParameter("expirationDate");
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar manufactureDate = Calendar.getInstance();
 		Calendar expirationDate = Calendar.getInstance();
 		try {
 			manufactureDate.setTime(dateFormat.parse(manufactureString));
 			expirationDate.setTime(dateFormat.parse(expirationString));
 		} catch (ParseException | NullPointerException ex) {
-			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
 		}
 		
 		return new Drink(name, ingredients, new Double(price), manufactureDate, expirationDate);
@@ -42,7 +42,7 @@ public class CreateDrinkVh implements IViewHelper {
 	@Override
 	public void setView(Result result, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			response.sendRedirect("/list?operation=SELECT");
+			response.sendRedirect("/crud-drinks/drinks?operation=SELECT");
 		} catch (IOException ex) {
 			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
 		}

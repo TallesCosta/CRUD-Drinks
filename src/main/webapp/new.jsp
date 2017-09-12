@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-		<form action="create" method="POST">
+		<form action="drinks/create" method="POST">
 			<label for="name">Name: </label>
 			<input type="text" name="name" id="name" />
 			<br/>
@@ -16,8 +16,8 @@
 			<label for="price">Price: </label>
 			<input type="number" name="price" id="price" />
 			<br/>
-			<label for="manufacturerDate">Manufacturer Date: </label>
-			<input type="date" name="manufacturerDate" id="manufacturerDate" />
+			<label for="manufactureDate">Manufacture Date: </label>
+			<input type="date" name="manufactureDate" id="manufactureDate" />
 			<br/>
 			<label for="expirationDate">Expiration Date: </label>
 			<input type="date" name="expirationDate" id="expirationDate" />

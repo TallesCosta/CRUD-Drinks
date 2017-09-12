@@ -15,7 +15,6 @@ import br.com.talles.drink.controll.viewHelper.drink.UpdateDrinkVh;
 import br.com.talles.drink.domain.Entity;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "EntryPoint", urlPatterns = {"/list", "/create"})
+@WebServlet(name = "EntryPoint", urlPatterns = {"/drinks", "/drinks/create"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -33,18 +32,18 @@ public class Servlet extends HttpServlet {
 
 	public Servlet() {
 		viewHelpers = new HashMap();
-		viewHelpers.put("/crud-drinks/create", new CreateDrinkVh());
-		viewHelpers.put("/crud-drinks/list", new ListDrinkVh());
-		viewHelpers.put("/crud-drinks/delete", new DeleteDrinkVh());
-		viewHelpers.put("/crud-drinks/find", new FindDrinkVh());
-		viewHelpers.put("/crud-drinks/update", new UpdateDrinkVh());
+		viewHelpers.put("/crud-drinks/drinks", new ListDrinkVh());
+		viewHelpers.put("/crud-drinks/drinks/create", new CreateDrinkVh());
+		viewHelpers.put("/crud-drinks/drinks/delete", new DeleteDrinkVh());
+		viewHelpers.put("/crud-drinks/drinks/show", new FindDrinkVh());
+		viewHelpers.put("/crud-drinks/drinks/update", new UpdateDrinkVh());
 
 		commands = new HashMap();
-		commands.put("SAVE", new SaveCmd());
-		commands.put("UPDATE", new UpdateCmd());
-		commands.put("DELETE", new DeleteCmd());
 		commands.put("SELECT", new SelectCmd());
+		commands.put("SAVE", new SaveCmd());
+		commands.put("DELETE", new DeleteCmd());
 		commands.put("FIND", new FindCmd());
+		commands.put("UPDATE", new UpdateCmd());
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -62,14 +61,6 @@ public class Servlet extends HttpServlet {
         Result result = command.execute(entity);
 
         viewHelper.setView(result, request, response);
-		
-		PrintWriter out = response.getWriter();
-		out.println("<html>");
-		out.println("<body>");
-		out.println("Msg:" + result.getMsg());
-		out.println(cmd);
-		out.println("</body>");
-		out.println("</html>");
 	}
 
 	/**

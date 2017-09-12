@@ -24,7 +24,7 @@ public class UpdateDrinkVh implements IViewHelper {
 	@Override
 	public void setView(Result result, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			response.sendRedirect("/show?operation=FIND");
+			response.sendRedirect("/crud-drinks/drinks/show?operation=FIND");
 		} catch (IOException ex) {
 			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
 		}
