@@ -26,7 +26,9 @@ public class Drink extends Entity {
 	
 	public Drink(String name, String ingredients, Double price, Calendar manufactureDate, Calendar expirationDate, 
 			Category category, Manufacturer manufacturer, Supplier supplier) {
-		this.name = name;
+		super.setCreateDate(new Date());
+		super.setUpdateDate(new Date());
+	    this.name = name;
 		this.ingredients = ingredients;
 		this.price = price;
 		this.manufactureDate = manufactureDate;
