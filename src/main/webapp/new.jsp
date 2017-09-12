@@ -1,3 +1,11 @@
+<%@page import="java.util.List"%>
+<%@page import="br.com.talles.drink.domain.Entity"%>
+<%@page import="br.com.talles.drink.persistence.dao.CategoryDao"%>
+<%@page import="br.com.talles.drink.domain.Category"%>
+<%@page import="br.com.talles.drink.persistence.dao.ManufacturerDao"%>
+<%@page import="br.com.talles.drink.domain.Manufacturer"%>
+<%@page import="br.com.talles.drink.persistence.dao.SupplierDao"%>
+<%@page import="br.com.talles.drink.domain.Supplier"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,6 +29,42 @@
 			<br/>
 			<label for="expirationDate">Expiration Date: </label>
 			<input type="date" name="expirationDate" id="expirationDate" />
+			<br/>
+			<label for="category">Category: </label>
+			<select id="category" name="id_category">
+			<%
+				CategoryDao daoC = new CategoryDao();
+				List<Entity> entitiesC = daoC.select();
+				for(Entity entity : entitiesC){
+					Category category = (Category) entity;
+					out.println("<option value='" + category.getId() + "'>" + category.getName() + "</option>");
+				}
+			%>
+			</select>
+			<br/>
+			<label for="manufacturer">Manufacturer </label>
+			<select id="manufacturer" name="manufacturer_id">
+			<%
+				ManufacturerDao daoM = new ManufacturerDao();
+				List<Entity> entitiesM = daoM.select();
+				for(Entity entity : entitiesM){
+					Manufacturer manufacturer = (Manufacturer) entity;
+					out.println("<option value='" + manufacturer.getId() + "'>" + manufacturer.getName() + "</option>");
+				}
+			%>
+			</select>
+			<br/>
+			<label for="supplier">Supplier </label>
+			<select id="supplier" name="supplier_id">
+			<%
+				SupplierDao daoS = new SupplierDao();
+				List<Entity> entitiesS = daoS.select();
+				for(Entity entity : entitiesS){
+					Supplier supplier = (Supplier) entity;
+					out.println("<option value='" + supplier.getId() + "'>" + supplier.getName() + "</option>");
+				}
+			%>
+			</select>
 			<br/>
 			<button type="submit" name="operation" value="SAVE">Save here! c:</button>
 		</form>

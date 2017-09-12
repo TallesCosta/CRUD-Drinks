@@ -1,8 +1,11 @@
 
 package br.com.talles.drink.persistence.dao;
 
+import br.com.talles.drink.domain.Category;
 import br.com.talles.drink.domain.Drink;
 import br.com.talles.drink.domain.Entity;
+import br.com.talles.drink.domain.Manufacturer;
+import br.com.talles.drink.domain.Supplier;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,9 +23,10 @@ public class DrinkDao extends AbstractDao {
 		openConnection();
 		
 		Drink drink = (Drink) entity;
-        String sql = "INSERT INTO drinks(createdDate, updatedDate, name, ingredients, price, manufactureDate, expirationDate)"
-                    + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-        		
+        String sql = "INSERT INTO drinks(createdDate, updatedDate, name, ingredients, price, manufactureDate, expirationDate, "
+						+ "id_category, id_manufacturer, id_supplier)"
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
 			
@@ -33,6 +37,9 @@ public class DrinkDao extends AbstractDao {
 			statement.setDouble(5, drink.getPrice());
 			statement.setDate(6, new java.sql.Date(drink.getManufactureDate().getTimeInMillis()));
 			statement.setDate(7, new java.sql.Date(drink.getExpirationDate().getTimeInMillis()));
+			statement.setLong(8, drink.getCategory().getId());
+			statement.setLong(9, drink.getManufacturer().getId());
+			statement.setLong(10, drink.getSupplier().getId());
             statement.execute();
             statement.close();
             
@@ -60,7 +67,10 @@ public class DrinkDao extends AbstractDao {
 		openConnection();
 		
 		List<Entity> drinks = new ArrayList();
-        String sql = "SELECT * FROM drinks";
+        String sql = "SELECT * FROM drinks d "
+				+ "INNER JOIN categories c ON d.id_category = c.id "
+				+ "INNER JOIN manufacturers m ON d.id_manufacturer = m.id "
+				+ "INNER JOIN suppliers s ON d.id_supplier = s.id";
         
         try{
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -70,19 +80,56 @@ public class DrinkDao extends AbstractDao {
                 Drink drink = new Drink();
                 
                 // Drink Data
-                drink.setId(result.getLong("id"));
-                drink.setCreateDate(result.getDate("createdDate"));
-                drink.setUpdateDate(result.getDate("updatedDate"));
-                drink.setName(result.getString("name"));
-                drink.setIngredients(result.getString("ingredients"));
-                drink.setPrice(result.getDouble("price"));
+                drink.setId(result.getLong("drinks.id"));
+                drink.setCreateDate(result.getDate("drinks.createdDate"));
+                drink.setUpdateDate(result.getDate("drinks.updatedDate"));
+                drink.setName(result.getString("drinks.name"));
+                drink.setIngredients(result.getString("drinks.ingredients"));
+                drink.setPrice(result.getDouble("drinks.price"));
 				
 				Calendar calendarTemp = Calendar.getInstance();
-				calendarTemp.setTime(result.getDate("manufactureDate"));
+				calendarTemp.setTime(result.getDate("drinks.manufactureDate"));
                 drink.setManufactureDate(calendarTemp);
-				calendarTemp.setTime(result.getDate("expirationDate"));
+				calendarTemp.setTime(result.getDate("drinks.expirationDate"));
 				drink.setExpirationDate(calendarTemp);
-				                
+				
+				// Category Data
+				Category category = new Category();
+                category.setId(result.getLong("categories.id"));
+                category.setCreateDate(result.getDate("categories.createdDate"));
+                category.setUpdateDate(result.getDate("categories.updatedDate"));
+                category.setName(result.getString("categories.name"));
+                category.setDescription(result.getString("categories.description"));
+                category.setAlcoholic(result.getBoolean("categories.alcoholic"));
+				
+				Calendar maxPermanencyPeriod = Calendar.getInstance();
+				maxPermanencyPeriod.setTime(result.getDate("categories.maxPermanencyPeriod"));
+                category.setMaxPermanencyPeriod(maxPermanencyPeriod);
+				
+				// Manufacturer Data
+				Manufacturer manufacturer = new Manufacturer();
+				manufacturer.setId(result.getLong("manufacturers.id"));
+                manufacturer.setCreateDate(result.getDate("manufacturers.createdDate"));
+                manufacturer.setUpdateDate(result.getDate("manufacturers.updatedDate"));
+                manufacturer.setName(result.getString("manufacturers.name"));
+                manufacturer.setRegistry(result.getString("manufacturers.registry"));
+                manufacturer.setPhone(result.getString("manufacturers.phone"));
+				manufacturer.setEmail(result.getString("manufacturers.email"));
+				
+				// Supplier Data
+				Supplier supplier = new Supplier();
+                supplier.setId(result.getLong("suppliers.id"));
+                supplier.setCreateDate(result.getDate("suppliers.createdDate"));
+                supplier.setUpdateDate(result.getDate("suppliers.updatedDate"));
+                supplier.setName(result.getString("suppliers.name"));
+                supplier.setRegistry(result.getString("suppliers.registry"));
+                supplier.setPhone(result.getString("suppliers.phone"));
+				supplier.setEmail(result.getString("suppliers.email"));
+				
+				drink.setCategory(category);
+				drink.setManufacturer(manufacturer);
+				drink.setSupplier(supplier);
+				
                 drinks.add(drink);
             }
             

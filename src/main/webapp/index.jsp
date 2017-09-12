@@ -25,6 +25,9 @@
 					out.println("<tr>");
 					out.println("<td>Name</td>");
 					out.println("<td>Price</td>");
+					out.println("<td>Category</td>");
+					out.println("<td>Manufacturer</td>");
+					out.println("<td>Supplier</td>");
 					out.println("<td>Editar</td>");
 					out.println("<td>Excluir</td>");
 					out.println("</tr>");
@@ -39,6 +42,9 @@
 						out.println("<tr>");
 						out.println("<td>" + drink.getName() + "</td>");
 						out.println("<td>" + drink.getPrice() + "</td>");
+						out.println("<td>" + drink.getCategory().getName() + "</td>");
+						out.println("<td>" + drink.getManufacturer().getName() + "</td>");
+						out.println("<td>" + drink.getSupplier().getName() + "</td>");
 						out.println("<td>"
 										+ "<a href='findMerchant?operation=FIND&id=" + drink.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
@@ -61,6 +67,9 @@
 					out.println("<tr>");
 					out.println("<td>Name</td>");
 					out.println("<td>Price</td>");
+					out.println("<td>Category</td>");
+					out.println("<td>Manufacturer</td>");
+					out.println("<td>Supplier</td>");
 					out.println("<td>Editar</td>");
 					out.println("<td>Excluir</td>");
 					out.println("</tr>");

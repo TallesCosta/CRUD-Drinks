@@ -3,8 +3,11 @@ package br.com.talles.drink.controll.viewHelper.drink;
 
 import br.com.talles.drink.controll.Result;
 import br.com.talles.drink.controll.viewHelper.IViewHelper;
+import br.com.talles.drink.domain.Category;
 import br.com.talles.drink.domain.Drink;
 import br.com.talles.drink.domain.Entity;
+import br.com.talles.drink.domain.Supplier;
+import br.com.talles.drink.domain.Manufacturer;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -36,7 +39,15 @@ public class CreateDrinkVh implements IViewHelper {
 			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
 		}
 		
-		return new Drink(name, ingredients, new Double(price), manufactureDate, expirationDate);
+		String id_category = request.getParameter("id_category");
+		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, "Category: " + id_category);
+		String manufacturer_id = request.getParameter("manufacturer_id");
+		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, "Manufacturer: " + manufacturer_id);
+		String supplier_id = request.getParameter("supplier_id");
+		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, "Supplier: " + supplier_id);
+		
+		return new Drink(name, ingredients, new Double(price), manufactureDate, expirationDate, 
+				new Category(new Long (id_category)), new Manufacturer(new Long (manufacturer_id)), new Supplier(new Long (supplier_id)));
 	}
 
 	@Override

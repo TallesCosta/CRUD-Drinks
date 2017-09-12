@@ -1,6 +1,7 @@
 package br.com.talles.drink.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +15,21 @@ public abstract class Company<T> extends Entity {
     private String email;
     private List<T> productsList = new ArrayList<>();
 
+	public Company() { }
+
+	public Company(Long id) {
+		super(id);
+	}
+
+	public Company(Long id, Date createdDate, Date updatedDate, 
+			String name, String registry, String phone, String email) {
+		super(id, createdDate, updatedDate);
+		this.name = name;
+		this.registry = registry;
+		this.phone = phone;
+		this.email = email;
+	}
+	
     public String getName() {
         return name;
     }

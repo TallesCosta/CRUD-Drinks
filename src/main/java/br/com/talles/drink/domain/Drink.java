@@ -24,13 +24,16 @@ public class Drink extends Entity {
 		super(id);
 	}
 	
-	public Drink(String name, String ingredients, Double price, Calendar manufactureDate, Calendar expirationDate) {
-		super(new Date(), new Date());
+	public Drink(String name, String ingredients, Double price, Calendar manufactureDate, Calendar expirationDate, 
+			Category category, Manufacturer manufacturer, Supplier supplier) {
 		this.name = name;
 		this.ingredients = ingredients;
 		this.price = price;
 		this.manufactureDate = manufactureDate;
 		this.expirationDate = expirationDate;
+		this.category = category;
+		this.manufacturer = manufacturer;
+		this.supplier = supplier;
 	}
 
 	public Drink(String name, String ingredients, Double aDouble, Date manufactureDate, Date expirationDate) {
