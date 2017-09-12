@@ -1,3 +1,4 @@
+<%@page import="br.com.talles.drink.controll.Result"%>
 <%@page import="java.util.List"%>
 <%@page import="br.com.talles.drink.domain.Entity"%>
 <%@page import="br.com.talles.drink.persistence.dao.CategoryDao"%>
@@ -15,6 +16,20 @@
     </head>
     <body>
 		<form action="drinks/create" method="POST">
+			<%
+				Result result = new Result();
+				result = (Result) request.getAttribute("result");
+				
+				if(result != null){
+					if(result.hasMsg()){
+						String[] msgs = result.getMsg().split("\n");
+						out.println("<p>");
+						for(String msg : msgs)
+							out.println("<i class='fa fa-times' aria-hidden='true' style='color: #FF0000;'></i> " + msg + "<br/>");
+						out.println("</p>");
+					}
+				}
+			%>
 			<label for="name">Name: </label>
 			<input type="text" name="name" id="name" />
 			<br/>
@@ -22,7 +37,7 @@
 			<textarea name="ingredients" id="ingredients"></textarea>
 			<br/>
 			<label for="price">Price: </label>
-			<input type="number" name="price" id="price" />
+			<input type="number" name="price" id="price" value="1" />
 			<br/>
 			<label for="manufactureDate">Manufacture Date: </label>
 			<input type="date" name="manufactureDate" id="manufactureDate" />
@@ -68,5 +83,7 @@
 			<br/>
 			<button type="submit" name="operation" value="SAVE">Save here! c:</button>
 		</form>
+			
+		<script src="https://use.fontawesome.com/51922b6b29.js"></script>
     </body>
 </html>

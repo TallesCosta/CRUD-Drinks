@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,35 +29,49 @@ public class CreateDrinkVh implements IViewHelper {
 		String ingredients = request.getParameter("ingredients");
 		String price = request.getParameter("price");
 		String manufactureString = request.getParameter("manufactureDate");
+		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, manufactureString);
 		String expirationString = request.getParameter("expirationDate");
+		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, expirationString);
+		String id_category = request.getParameter("id_category");
+		String manufacturer_id = request.getParameter("manufacturer_id");
+		String supplier_id = request.getParameter("supplier_id");
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar manufactureDate = Calendar.getInstance();
 		Calendar expirationDate = Calendar.getInstance();
-		try {
+		try {			
 			manufactureDate.setTime(dateFormat.parse(manufactureString));
+			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, manufactureDate.toString());
 			expirationDate.setTime(dateFormat.parse(expirationString));
-		} catch (ParseException | NullPointerException ex) {
-			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-		}
-		
-		String id_category = request.getParameter("id_category");
-		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, "Category: " + id_category);
-		String manufacturer_id = request.getParameter("manufacturer_id");
-		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, "Manufacturer: " + manufacturer_id);
-		String supplier_id = request.getParameter("supplier_id");
-		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, "Supplier: " + supplier_id);
-		
-		return new Drink(name, ingredients, new Double(price), manufactureDate, expirationDate, 
+			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, expirationDate.toString());
+			
+			return new Drink(name, ingredients, new Double(price), manufactureDate, expirationDate, 
 				new Category(new Long (id_category)), new Manufacturer(new Long (manufacturer_id)), new Supplier(new Long (supplier_id)));
+		} catch (ParseException | NumberFormatException ex) {
+			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+			return new Drink();
+		}
 	}
 
 	@Override
 	public void setView(Result result, HttpServletRequest request, HttpServletResponse response) {
-		try {
-			response.sendRedirect("/crud-drinks/drinks?operation=SELECT");
-		} catch (IOException ex) {
-			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
+		if(result.hasMsg()){
+			request.setAttribute("result", result);
+			
+			RequestDispatcher dispatcher;
+			dispatcher = request.getRequestDispatcher("/new.jsp");
+			
+			try {
+				dispatcher.forward(request, response);
+			} catch (ServletException | IOException ex) {
+				Logger.getLogger(ListDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}else{
+			try {
+				response.sendRedirect("/crud-drinks/drinks?operation=SELECT");
+			} catch (IOException ex) {
+				Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 	}
 	

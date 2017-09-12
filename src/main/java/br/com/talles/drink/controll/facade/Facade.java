@@ -1,11 +1,13 @@
 package br.com.talles.drink.controll.facade;
 
+import br.com.talles.drink.business.DrinkNotBlank;
 import br.com.talles.drink.business.IStrategy;
 import br.com.talles.drink.controll.Result;
 import br.com.talles.drink.domain.Drink;
 import br.com.talles.drink.domain.Entity;
 import br.com.talles.drink.persistence.dao.DrinkDao;
 import br.com.talles.drink.persistence.dao.IDao;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +28,10 @@ public class Facade implements IFacade {
         String drink = Drink.class.getName();
         
         // All Strategies
-        // ...
+        DrinkNotBlank drinkNotBlank = new DrinkNotBlank();
                 
         List<IStrategy> saveDrink = new ArrayList();
-        // Save Strategies
+		saveDrink.add(drinkNotBlank);
         
         List<IStrategy> updateDrink = new ArrayList();
         // Update Strategies
@@ -100,7 +102,6 @@ public class Facade implements IFacade {
         
         for(IStrategy validation : validations){
             result.addMsg(validation.process(entity));
-            
             if(result.hasMsg()){
                 result.setEntity(entity);
                 return result;
