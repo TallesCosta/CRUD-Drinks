@@ -1,8 +1,8 @@
 package br.com.talles.drink.controll;
 
-import java.util.List;
-
 import br.com.talles.drink.domain.Entity;
+
+import java.util.List;
 import java.util.ArrayList;
 
 public class Result {
@@ -10,6 +10,11 @@ public class Result {
     private List<Entity> entities;
     private String msg;
     
+	public Result() {
+        entities = new ArrayList();
+        msg = "";
+    }
+	
     public List<Entity> getEntities() {
         return entities;
     }
@@ -37,11 +42,6 @@ public class Result {
 
     public void addMsg(String msg){
         this.msg += msg;
-    }
-    
-    public Result() {
-        entities = new ArrayList();
-        msg = "";
     }
     
     public boolean hasEntities() {
