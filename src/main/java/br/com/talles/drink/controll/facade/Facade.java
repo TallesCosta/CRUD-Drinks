@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Facade implements IFacade {
 
@@ -74,7 +76,7 @@ public class Facade implements IFacade {
         
         IDao dao = persistence.get(entity.getClass().getName());
         boolean resultDao = dao.save(entity);
-        
+		
         if(!resultDao)
             result.addMsg("An error has occurred in the process of your operation, "
 					+ "it has been noted and will be resolved soon!");

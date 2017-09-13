@@ -29,9 +29,7 @@ public class CreateDrinkVh implements IViewHelper {
 		String ingredients = request.getParameter("ingredients");
 		String price = request.getParameter("price");
 		String manufactureString = request.getParameter("manufactureDate");
-		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, manufactureString);
 		String expirationString = request.getParameter("expirationDate");
-		Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, expirationString);
 		String id_category = request.getParameter("id_category");
 		String manufacturer_id = request.getParameter("manufacturer_id");
 		String supplier_id = request.getParameter("supplier_id");
@@ -41,22 +39,11 @@ public class CreateDrinkVh implements IViewHelper {
 		Calendar expirationDate = Calendar.getInstance();
 		try {			
 			manufactureDate.setTime(dateFormat.parse(manufactureString));
-			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, manufactureDate.toString());
 			expirationDate.setTime(dateFormat.parse(expirationString));
-			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.INFO, expirationDate.toString());
-
-			Drink drink = new Drink();
-
-            drink.setName(name);
-            drink.setIngredients(ingredients);
-            drink.setPrice(Double.valueOf(price));
-            drink.setManufactureDate(manufactureDate);
-            drink.setExpirationDate(expirationDate);
-            drink.setCategory(new Category(Long.valueOf(id_category)));
-            drink.setManufacturer(new Manufacturer(Long.valueOf(manufacturer_id)));
-            drink.setSupplier(new Supplier(Long.valueOf(supplier_id)));
-
-			return drink;
+			
+			return new Drink(name, ingredients, new Double(price), manufactureDate, expirationDate, 
+					new Category(new Long (id_category)), new Manufacturer(new Long (manufacturer_id)), 
+					new Supplier(new Long (supplier_id)));
 		} catch (ParseException | NumberFormatException ex) {
 			Logger.getLogger(CreateDrinkVh.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
 			return new Drink();

@@ -57,7 +57,7 @@
             </div>
 
             <div>
-                <label for="category"></label>
+                <label for="category">Category </label>
                 <select id="category" name="id_category">
                     <option value="1">Cerveja</option>
                     <option value="2">Refrigerante</option>
