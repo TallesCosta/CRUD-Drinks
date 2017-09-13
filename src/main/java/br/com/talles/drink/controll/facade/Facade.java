@@ -1,6 +1,7 @@
 package br.com.talles.drink.controll.facade;
 
 import br.com.talles.drink.business.DrinkNotBlank;
+import br.com.talles.drink.business.DrinkPermanencyPeriod;
 import br.com.talles.drink.business.IStrategy;
 import br.com.talles.drink.controll.Result;
 import br.com.talles.drink.domain.Drink;
@@ -30,9 +31,11 @@ public class Facade implements IFacade {
         
         // All Strategies
         DrinkNotBlank drinkNotBlank = new DrinkNotBlank();
+		DrinkPermanencyPeriod drinkPermanencyPeriod = new DrinkPermanencyPeriod();
                 
         List<IStrategy> saveDrink = new ArrayList();
 		saveDrink.add(drinkNotBlank);
+		saveDrink.add(drinkPermanencyPeriod);
         
         List<IStrategy> updateDrink = new ArrayList();
         // Update Strategies
