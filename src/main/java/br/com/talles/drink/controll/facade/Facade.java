@@ -38,7 +38,8 @@ public class Facade implements IFacade {
 		saveDrink.add(drinkPermanencyPeriod);
         
         List<IStrategy> updateDrink = new ArrayList();
-        // Update Strategies
+        updateDrink.add(drinkNotBlank);
+        updateDrink.add(drinkPermanencyPeriod);
         
         List<IStrategy> deleteDrink = new ArrayList();
         // Delete Strategies
@@ -82,9 +83,24 @@ public class Facade implements IFacade {
 	}
 
 	@Override
-	public Result update(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+    public Result update(Entity entity) {
+        Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
+        List<IStrategy> validations = reqs.get(UPDATE);
+        IDao dao = persistence.get(entity.getClass().getName());
+        this.result = new Result();
+
+        result.setEntity(entity);
+        result = executeValidations(entity, validations);
+
+        if(result.hasMsg())
+            return result;
+
+        boolean resultDao = dao.update(entity);
+        if(!resultDao)
+            result.addMsg("Um erro ocorreu no processo da sua operação, ele foi anotado e será resolvido em breve!");
+
+        return result;
+    }
 
 	@Override
 	public Result delete(Entity entity) {

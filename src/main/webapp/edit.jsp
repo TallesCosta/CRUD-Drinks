@@ -29,7 +29,8 @@
                 <% } // end forEach %>
             </div>
         </c:if>
-        <form action="drinks/update" method="POST">
+        <form action="<% out.print(request.getContextPath().concat("/drinks/update")); %>" method="POST">
+            <input type="hidden" name="drinkID" value="<% out.print(drink.getId()); %>">
             <div>
                 <label for="name">Name:</label>
                 <input type="text" name="name" id="name" value="<% out.print(drink.getName()); %>"/>

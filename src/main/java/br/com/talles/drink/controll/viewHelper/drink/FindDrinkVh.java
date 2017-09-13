@@ -21,7 +21,7 @@ public class FindDrinkVh implements IViewHelper {
 	public Entity getEntity(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		
-		return new Drink(new Long(id));
+		return new Drink(Long.valueOf(id));
 	}
 
 	@Override

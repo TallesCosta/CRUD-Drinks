@@ -7,6 +7,7 @@ import br.com.talles.drink.domain.Entity;
 import br.com.talles.drink.domain.Manufacturer;
 import br.com.talles.drink.domain.Supplier;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,7 +55,46 @@ public class DrinkDao extends AbstractDao {
 
 	@Override
 	public boolean update(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		openConnection();
+		Drink drink = (Drink) entity;
+		String query = "UPDATE drinks SET " +
+                "updatedDate = ?, " +
+                "name = ?, " +
+                "ingredients = ?, " +
+                "price = ?, " +
+                "manufactureDate = ?, " +
+                "expirationDate = ?, " +
+                "id_category = ?, " +
+                "id_manufacturer = ?, " +
+                "id_supplier = ? " +
+                "WHERE drinks.id = ?";
+		try {
+		    PreparedStatement stmt = conn.prepareStatement(query);
+		    stmt.setTimestamp(1, new java.sql.Timestamp(Calendar.getInstance().getTimeInMillis()));
+		    stmt.setString(2, drink.getName());
+		    stmt.setString(3, drink.getIngredients());
+		    stmt.setDouble(4, drink.getPrice());
+
+		    java.sql.Date dateRecord = new java.sql.Date(drink.getManufactureDate().getTimeInMillis());
+		    stmt.setDate(5, dateRecord);
+
+		    dateRecord = new java.sql.Date(drink.getExpirationDate().getTimeInMillis());
+		    stmt.setDate(6, dateRecord);
+
+		    stmt.setLong(7, drink.getCategory().getId());
+		    stmt.setLong(8, drink.getManufacturer().getId());
+		    stmt.setLong(9, drink.getSupplier().getId());
+		    stmt.setLong(10, drink.getId());
+		    stmt.execute();
+		    stmt.close();
+
+		    return true;
+        } catch (SQLException e) {
+            Logger.getLogger(DrinkDao.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        } finally {
+		    closeConnection();
+        }
 	}
 
 	@Override
