@@ -62,8 +62,9 @@ public class Facade implements IFacade {
 	public Result save(Entity entity) {
 		Map<String, List<IStrategy>> reqs = requirements.get(entity.getClass().getName());
         List<IStrategy> validations = reqs.get(SAVE);
+        this.result = new Result();
         
-        Result result = executeValidations(entity, validations);
+        result = executeValidations(entity, validations);
         if(result.hasMsg())
             return result;
         
@@ -89,6 +90,8 @@ public class Facade implements IFacade {
 	@Override
 	public Result select(Entity entity) {
 		IDao dao = persistence.get(entity.getClass().getName());
+        this.result = new Result();
+
         result.setEntities(dao.select());
         
         return result;
@@ -96,9 +99,11 @@ public class Facade implements IFacade {
 
 	@Override
 	public Result find(Entity entity) {
-	     IDao dao = persistence.get(entity.getClass().getName());
-	     result.setEntity(dao.find(entity));
-	     return result;
+	    IDao dao = persistence.get(entity.getClass().getName());
+        this.result = new Result();
+
+	    result.setEntity(dao.find(entity));
+	    return result;
 	}
 	
 	public Result executeValidations(Entity entity, List<IStrategy> validations) {
