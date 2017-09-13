@@ -52,7 +52,7 @@
 									+ "</td>");
 
 						out.println("<td>"
-										+ "<a href='deleteMerchant?operation=DELETE&id=" + drink.getId() + "'>"
+										+ "<a href='drinks/delete?operation=DELETE&id=" + drink.getId() + "'>"
 											+ "<i class='fa fa-trash' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");

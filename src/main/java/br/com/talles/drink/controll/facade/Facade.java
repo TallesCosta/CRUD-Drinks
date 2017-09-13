@@ -75,7 +75,8 @@ public class Facade implements IFacade {
         boolean resultDao = dao.save(entity);
         
         if(!resultDao)
-            result.addMsg("Um erro ocorreu no processo da sua operação, ele foi anotado e será resolvido em breve!");
+            result.addMsg("An error has occurred in the process of your operation, "
+					+ "it has been noted and will be resolved soon!");
         
         return result;
 	}
@@ -87,7 +88,14 @@ public class Facade implements IFacade {
 
 	@Override
 	public Result delete(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		IDao dao = persistence.get(entity.getClass().getName());
+        boolean resultDao = dao.delete(entity);
+        
+        if(!resultDao)
+            result.addMsg("An error has occurred in the process of your operation, "
+					+ "it has been noted and will be resolved soon!");
+        
+        return result;
 	}
 
 	@Override

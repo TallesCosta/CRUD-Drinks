@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "EntryPoint", urlPatterns = {"/drinks", "/drinks/find", "/drinks/create"})
+@WebServlet(name = "EntryPoint", urlPatterns = {"/drinks", "/drinks/find", "/drinks/create", "/drinks/delete"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;

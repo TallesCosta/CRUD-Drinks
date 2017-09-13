@@ -59,7 +59,26 @@ public class DrinkDao extends AbstractDao {
 
 	@Override
 	public boolean delete(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		openConnection();
+		
+		Drink drink = (Drink) entity;
+        String sql = "DELETE FROM drinks "
+                + "WHERE id = ?";
+        
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            
+            statement.setLong(1, drink.getId());
+            statement.execute();
+            statement.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DrinkDao.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally{
+			closeConnection();
+		}
 	}
 
 	@Override
@@ -209,12 +228,13 @@ public class DrinkDao extends AbstractDao {
             drink.setSupplier(supplier);
 
             stmt.close();
-            closeConnection();
 
             return drink;
         } catch (SQLException e) {
 		    throw new RuntimeException(e);
-        }
+        } finally{
+			closeConnection();
+		}
 	}
 	
 }
