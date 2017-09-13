@@ -46,7 +46,7 @@
 						out.println("<td>" + drink.getManufacturer().getName() + "</td>");
 						out.println("<td>" + drink.getSupplier().getName() + "</td>");
 						out.println("<td>"
-										+ "<a href='findMerchant?operation=FIND&id=" + drink.getId() + "'>"
+										+ "<a href='drinks/find?operation=FIND&id=" + drink.getId() + "'>"
 											+ "<i class='fa fa-pencil' aria-hidden='true'></i>"
 										+ "</a>"
 									+ "</td>");
