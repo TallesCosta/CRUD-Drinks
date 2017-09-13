@@ -1,7 +1,6 @@
 <%@ page import="br.com.talles.drink.domain.Drink" %>
 <%@ page import="br.com.talles.drink.controll.Result" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Calendar" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="drink" class="br.com.talles.drink.domain.Drink" />
@@ -30,7 +29,7 @@
                 <% } // end forEach %>
             </div>
         </c:if>
-        <form action="drinks/update">
+        <form action="drinks/update" method="POST">
             <div>
                 <label for="name">Name:</label>
                 <input type="text" name="name" id="name" value="<% out.print(drink.getName()); %>"/>
