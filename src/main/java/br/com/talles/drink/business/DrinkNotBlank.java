@@ -20,7 +20,7 @@ public class DrinkNotBlank implements IStrategy {
             msg += "Price is a mandatory field!\n";
         } if(drink.getManufactureDate() == null || drink.getManufactureDate().after(Calendar.getInstance())){
             msg += "Manufacture date is a mandatory field and should be a date up until the current date!\n";
-        } if(drink.getExpirationDate() == null || drink.getManufactureDate().before(Calendar.getInstance())){
+        } if(drink.getExpirationDate() == null || drink.getExpirationDate().before(Calendar.getInstance())){
             msg += "Expiration date is a mandatory field and should be a date starting the current date!\n";
         }
         

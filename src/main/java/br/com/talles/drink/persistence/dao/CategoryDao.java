@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class CategoryDao extends AbstractDao {
@@ -49,11 +48,8 @@ public class CategoryDao extends AbstractDao {
                 category.setName(result.getString("name"));
                 category.setDescription(result.getString("description"));
                 category.setAlcoholic(result.getBoolean("alcoholic"));
+                category.setMaxPermanencyPeriod(result.getInt("maxPermanencyPeriod"));
 				
-				Calendar maxPermanencyPeriod = Calendar.getInstance();
-				maxPermanencyPeriod.setTime(result.getDate("maxPermanencyPeriod"));
-                category.setMaxPermanencyPeriod(maxPermanencyPeriod);
-				                
                 categories.add(category);
             }
             
@@ -70,7 +66,35 @@ public class CategoryDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		openConnection();
+		Category category = (Category) entity;
+
+		String query = "SELECT * FROM categories WHERE id = ?";
+
+		try {
+		    PreparedStatement stmt = conn.prepareStatement(query);
+		    ResultSet result;
+
+		    stmt.setLong(1, category.getId());
+		    result = stmt.executeQuery();
+            result.first();
+
+            // Category Data
+            category.setId(result.getLong("categories.id"));
+            category.setCreateDate(result.getDate("categories.createdDate"));
+            category.setUpdateDate(result.getDate("categories.updatedDate"));
+            category.setName(result.getString("categories.name"));
+            category.setDescription(result.getString("categories.description"));
+            category.setAlcoholic(result.getBoolean("categories.alcoholic"));
+			category.setMaxPermanencyPeriod(result.getInt("categories.maxPermanencyPeriod"));
+
+            stmt.close();
+            closeConnection();
+
+            return category;
+		} catch (SQLException e) {
+		    throw new RuntimeException(e);
+        }
 	}	
 	
 }

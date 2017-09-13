@@ -101,11 +101,8 @@ public class DrinkDao extends AbstractDao {
                 category.setName(result.getString("categories.name"));
                 category.setDescription(result.getString("categories.description"));
                 category.setAlcoholic(result.getBoolean("categories.alcoholic"));
-
-				Calendar maxPermanencyPeriod = Calendar.getInstance();
-				maxPermanencyPeriod.setTime(result.getDate("categories.maxPermanencyPeriod"));
-                category.setMaxPermanencyPeriod(maxPermanencyPeriod);
-
+				category.setMaxPermanencyPeriod(result.getInt("categories.maxPermanencyPeriod"));
+				
 				// Manufacturer Data
 				Manufacturer manufacturer = new Manufacturer();
 				manufacturer.setId(result.getLong("manufacturers.id"));
@@ -185,10 +182,7 @@ public class DrinkDao extends AbstractDao {
             category.setName(result.getString("categories.name"));
             category.setDescription(result.getString("categories.description"));
             category.setAlcoholic(result.getBoolean("categories.alcoholic"));
-
-            Calendar maxPermanencyPeriod = Calendar.getInstance();
-            maxPermanencyPeriod.setTime(result.getDate("categories.maxPermanencyPeriod"));
-            category.setMaxPermanencyPeriod(maxPermanencyPeriod);
+			category.setMaxPermanencyPeriod(result.getInt("categories.maxPermanencyPeriod"));
 
             // Manufacturer Data
             Manufacturer manufacturer = new Manufacturer();

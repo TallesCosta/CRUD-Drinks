@@ -8,6 +8,6 @@ CREATE TABLE Categories (
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
     alcoholic BOOLEAN NOT NULL,
-    maxPermanencyPeriod DATE NOT NULL,
+    maxPermanencyPeriod INT NOT NULL,
 	CONSTRAINT PK_Category PRIMARY KEY (id)
 );

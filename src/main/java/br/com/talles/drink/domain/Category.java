@@ -1,7 +1,6 @@
 package br.com.talles.drink.domain;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class Category extends Entity {
     private String name;
     private String description;
     private Boolean alcoholic;
-    private Calendar maxPermanencyPeriod;
+    private int maxPermanencyPeriod;
     private List<Drink> drinks = new ArrayList<>();
 
     public Category() { }
@@ -23,7 +22,7 @@ public class Category extends Entity {
 	}
 
 	public Category(Long id, Date createdDate, Date updatedDate, 
-			String name, String description, Boolean alcoholic, Calendar maxPermanencyPeriod) {
+			String name, String description, Boolean alcoholic, int maxPermanencyPeriod) {
 		super(id, createdDate, updatedDate);
 		this.name = name;
 		this.description = description;
@@ -55,11 +54,11 @@ public class Category extends Entity {
         this.alcoholic = alcoholic;
     }
 
-    public Calendar getMaxPermanencyPeriod() {
+    public int getMaxPermanencyPeriod() {
         return maxPermanencyPeriod;
     }
 
-    public void setMaxPermanencyPeriod(Calendar maxPermanencyPeriod) {
+    public void setMaxPermanencyPeriod(int maxPermanencyPeriod) {
         this.maxPermanencyPeriod = maxPermanencyPeriod;
     }
 }
