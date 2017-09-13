@@ -1,7 +1,6 @@
 <%@ page import="br.com.talles.drink.domain.Drink" %>
 <%@ page import="br.com.talles.drink.controll.Result" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Calendar" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="drink" class="br.com.talles.drink.domain.Drink" />
@@ -10,9 +9,10 @@
   Result result = (Result) request.getAttribute("result");
   drink = (Drink) result.getEntity(0);
 
-    SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-    String dateMnf = fmt.format(drink.getManufactureDate().getTime());
-    String dateExp = fmt.format(drink.getExpirationDate().getTime());
+  SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+  String dateMnf = fmt.format(drink.getManufactureDate().getTime());
+  String dateExp = fmt.format(drink.getExpirationDate().getTime());
+
 %>
 
 <html>
@@ -29,7 +29,7 @@
                 <% } // end forEach %>
             </div>
         </c:if>
-        <form action="drinks/update">
+        <form action="drinks/update" method="POST">
             <div>
                 <label for="name">Name:</label>
                 <input type="text" name="name" id="name" value="<% out.print(drink.getName()); %>"/>
