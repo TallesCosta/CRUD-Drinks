@@ -10,9 +10,10 @@
   Result result = (Result) request.getAttribute("result");
   drink = (Drink) result.getEntity(0);
 
-    SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-    String dateMnf = fmt.format(drink.getManufactureDate().getTime());
-    String dateExp = fmt.format(drink.getExpirationDate().getTime());
+  SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+  String dateMnf = fmt.format(drink.getManufactureDate().getTime());
+  String dateExp = fmt.format(drink.getExpirationDate().getTime());
+
 %>
 
 <html>
