@@ -86,13 +86,13 @@ public class DrinkDao extends AbstractDao {
                 drink.setName(result.getString("drinks.name"));
                 drink.setIngredients(result.getString("drinks.ingredients"));
                 drink.setPrice(result.getDouble("drinks.price"));
-				
+
 				Calendar calendarTemp = Calendar.getInstance();
 				calendarTemp.setTime(result.getDate("drinks.manufactureDate"));
                 drink.setManufactureDate(calendarTemp);
 				calendarTemp.setTime(result.getDate("drinks.expirationDate"));
 				drink.setExpirationDate(calendarTemp);
-				
+
 				// Category Data
 				Category category = new Category();
                 category.setId(result.getLong("categories.id"));
@@ -101,11 +101,11 @@ public class DrinkDao extends AbstractDao {
                 category.setName(result.getString("categories.name"));
                 category.setDescription(result.getString("categories.description"));
                 category.setAlcoholic(result.getBoolean("categories.alcoholic"));
-				
+
 				Calendar maxPermanencyPeriod = Calendar.getInstance();
 				maxPermanencyPeriod.setTime(result.getDate("categories.maxPermanencyPeriod"));
                 category.setMaxPermanencyPeriod(maxPermanencyPeriod);
-				
+
 				// Manufacturer Data
 				Manufacturer manufacturer = new Manufacturer();
 				manufacturer.setId(result.getLong("manufacturers.id"));
@@ -115,7 +115,7 @@ public class DrinkDao extends AbstractDao {
                 manufacturer.setRegistry(result.getString("manufacturers.registry"));
                 manufacturer.setPhone(result.getString("manufacturers.phone"));
 				manufacturer.setEmail(result.getString("manufacturers.email"));
-				
+
 				// Supplier Data
 				Supplier supplier = new Supplier();
                 supplier.setId(result.getLong("suppliers.id"));
@@ -125,11 +125,11 @@ public class DrinkDao extends AbstractDao {
                 supplier.setRegistry(result.getString("suppliers.registry"));
                 supplier.setPhone(result.getString("suppliers.phone"));
 				supplier.setEmail(result.getString("suppliers.email"));
-				
+
 				drink.setCategory(category);
 				drink.setManufacturer(manufacturer);
 				drink.setSupplier(supplier);
-				
+
                 drinks.add(drink);
             }
             
@@ -146,7 +146,81 @@ public class DrinkDao extends AbstractDao {
 
 	@Override
 	public Entity find(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		openConnection();
+		Drink drink = (Drink) entity;
+
+		String query = "SELECT * FROM drinks d "
+                + "INNER JOIN categories c ON d.id_category = c.id "
+                + "INNER JOIN manufacturers m ON d.id_manufacturer = m.id "
+                + "INNER JOIN suppliers s ON d.id_supplier = s.id "
+                + "WHERE d.id = ?";
+
+		try {
+		    PreparedStatement stmt = conn.prepareStatement(query);
+		    ResultSet result;
+
+		    stmt.setLong(1, drink.getId());
+		    result = stmt.executeQuery();
+            result.first();
+
+            // Drink Data
+            drink.setId(result.getLong("drinks.id"));
+            drink.setCreateDate(result.getDate("drinks.createdDate"));
+            drink.setUpdateDate(result.getDate("drinks.updatedDate"));
+            drink.setName(result.getString("drinks.name"));
+            drink.setIngredients(result.getString("drinks.ingredients"));
+            drink.setPrice(result.getDouble("drinks.price"));
+
+            Calendar calendarTemp = Calendar.getInstance();
+            calendarTemp.setTime(result.getDate("drinks.manufactureDate"));
+            drink.setManufactureDate(calendarTemp);
+            calendarTemp.setTime(result.getDate("drinks.expirationDate"));
+            drink.setExpirationDate(calendarTemp);
+
+            // Category Data
+            Category category = new Category();
+            category.setId(result.getLong("categories.id"));
+            category.setCreateDate(result.getDate("categories.createdDate"));
+            category.setUpdateDate(result.getDate("categories.updatedDate"));
+            category.setName(result.getString("categories.name"));
+            category.setDescription(result.getString("categories.description"));
+            category.setAlcoholic(result.getBoolean("categories.alcoholic"));
+
+            Calendar maxPermanencyPeriod = Calendar.getInstance();
+            maxPermanencyPeriod.setTime(result.getDate("categories.maxPermanencyPeriod"));
+            category.setMaxPermanencyPeriod(maxPermanencyPeriod);
+
+            // Manufacturer Data
+            Manufacturer manufacturer = new Manufacturer();
+            manufacturer.setId(result.getLong("manufacturers.id"));
+            manufacturer.setCreateDate(result.getDate("manufacturers.createdDate"));
+            manufacturer.setUpdateDate(result.getDate("manufacturers.updatedDate"));
+            manufacturer.setName(result.getString("manufacturers.name"));
+            manufacturer.setRegistry(result.getString("manufacturers.registry"));
+            manufacturer.setPhone(result.getString("manufacturers.phone"));
+            manufacturer.setEmail(result.getString("manufacturers.email"));
+
+            // Supplier Data
+            Supplier supplier = new Supplier();
+            supplier.setId(result.getLong("suppliers.id"));
+            supplier.setCreateDate(result.getDate("suppliers.createdDate"));
+            supplier.setUpdateDate(result.getDate("suppliers.updatedDate"));
+            supplier.setName(result.getString("suppliers.name"));
+            supplier.setRegistry(result.getString("suppliers.registry"));
+            supplier.setPhone(result.getString("suppliers.phone"));
+            supplier.setEmail(result.getString("suppliers.email"));
+
+            drink.setCategory(category);
+            drink.setManufacturer(manufacturer);
+            drink.setSupplier(supplier);
+
+            stmt.close();
+            closeConnection();
+
+            return drink;
+        } catch (SQLException e) {
+		    throw new RuntimeException(e);
+        }
 	}
 	
 }

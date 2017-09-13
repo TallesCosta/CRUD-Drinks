@@ -29,8 +29,8 @@ public class FindDrinkVh implements IViewHelper {
 		request.setAttribute("result", result);
 		
 		RequestDispatcher dispatcher;
-		dispatcher = request.getRequestDispatcher("/new.jsp");
-		
+		dispatcher = request.getRequestDispatcher("/edit.jsp");
+
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException ex) {

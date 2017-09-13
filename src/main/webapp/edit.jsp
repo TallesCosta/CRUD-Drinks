@@ -1,12 +1,18 @@
 <%@ page import="br.com.talles.drink.domain.Drink" %>
 <%@ page import="br.com.talles.drink.controll.Result" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Calendar" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="drink" class="br.com.talles.drink.domain.Drink" />
 
 <%
   Result result = (Result) request.getAttribute("result");
-  drink = (Drink) result.getEntities();
+  drink = (Drink) result.getEntity(0);
+
+    SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+    String dateMnf = fmt.format(drink.getManufactureDate().getTime());
+    String dateExp = fmt.format(drink.getExpirationDate().getTime());
 %>
 
 <html>
@@ -26,27 +32,27 @@
         <form action="drinks/update">
             <div>
                 <label for="name">Name:</label>
-                <input type="text" name="name" id="name" value="${drink.name}"/>
+                <input type="text" name="name" id="name" value="<% out.print(drink.getName()); %>"/>
             </div>
 
             <div>
                 <label for="ingredients">Ingredients:</label>
-                <textarea name="ingredients" id="ingredients">"${drink.ingredients}"</textarea>
+                <textarea name="ingredients" id="ingredients"><% out.print(drink.getIngredients()); %></textarea>
             </div>
 
             <div>
                 <label for="price">Price: </label>
-                <input type="number" name="price" id="price" value="value="${drink.price}"" />
+                <input type="number" name="price" id="price" value="<% out.print(drink.getPrice()); %>" />
             </div>
 
             <div>
                 <label for="manufactureDate">Manufacture Date:</label>
-                <input type="date" name="manufactureDate" id="manufactureDate" value="value="${drink.manufactureDate}"" />
+                <input type="date" name="manufactureDate" id="manufactureDate" value="<%  out.print(dateMnf); %>" />
             </div>
 
             <div>
                 <label for="expirationDate">Expiration Date:</label>
-                <input type="date" name="expirationDate" id="expirationDate" value="value="${drink.expirationDate}"" />
+                <input type="date" name="expirationDate" id="expirationDate" value="<% out.print(dateExp); %>" />
             </div>
 
             <div>
@@ -79,6 +85,8 @@
                     <option value="3">Pão de Açúcar</option>
                 </select>
             </div>
+
+            <button type="submit" name="operation" value="UPDATE">Update</button>
         </form>
     </div>
 </body>

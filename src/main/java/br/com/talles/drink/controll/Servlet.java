@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "EntryPoint", urlPatterns = {"/drinks", "/drinks/create"})
+@WebServlet(name = "EntryPoint", urlPatterns = {"/drinks/find", "/drinks/create"})
 public class Servlet extends HttpServlet {
 
 	private Map<String, IViewHelper> viewHelpers;
@@ -35,7 +35,7 @@ public class Servlet extends HttpServlet {
 		viewHelpers.put("/crud-drinks/drinks", new ListDrinkVh());
 		viewHelpers.put("/crud-drinks/drinks/create", new CreateDrinkVh());
 		viewHelpers.put("/crud-drinks/drinks/delete", new DeleteDrinkVh());
-		viewHelpers.put("/crud-drinks/drinks/show", new FindDrinkVh());
+		viewHelpers.put("/crud-drinks/drinks/find", new FindDrinkVh());
 		viewHelpers.put("/crud-drinks/drinks/update", new UpdateDrinkVh());
 
 		commands = new HashMap();
