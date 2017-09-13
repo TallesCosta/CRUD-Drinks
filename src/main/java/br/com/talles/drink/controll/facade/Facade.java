@@ -17,6 +17,7 @@ public class Facade implements IFacade {
 
 	private Map<String, Map<String, List<IStrategy>>> requirements;
     private Map<String, IDao> persistence;
+    private Result result;
     
     private static final String SAVE = "SAVE";
     private static final String UPDATE = "UPDATE";
@@ -53,6 +54,8 @@ public class Facade implements IFacade {
         
         persistence = new HashMap();
         persistence.put(drink, new DrinkDao());
+
+        this.result = new Result();
     }
 	
 	@Override
@@ -85,7 +88,6 @@ public class Facade implements IFacade {
 
 	@Override
 	public Result select(Entity entity) {
-		Result result = new Result();
 		IDao dao = persistence.get(entity.getClass().getName());
         result.setEntities(dao.select());
         
@@ -94,11 +96,12 @@ public class Facade implements IFacade {
 
 	@Override
 	public Result find(Entity entity) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	     IDao dao = persistence.get(entity.getClass().getName());
+	     result.setEntity(dao.find(entity));
+	     return result;
 	}
 	
-	public Result executeValidations(Entity entity, List<IStrategy> validations){
-        Result result = new Result();
+	public Result executeValidations(Entity entity, List<IStrategy> validations) {
         
         for(IStrategy validation : validations){
             result.addMsg(validation.process(entity));
